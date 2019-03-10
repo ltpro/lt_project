@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>midea_vue</title>
+    <link rel="stylesheet" href="css/base.css">
+    <script src="js/jquery-3.2.1.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    //商品类目的功能
+    /*var tabs=document.querySelectorAll("[data-cate=tab]");
+    //console.log(tabs);
+    for(var tab of tabs){
+        tab.onmouseenter=function(){
+        var tab=this;
+    //获取当前tab对应的属性值，值为要显示区域的id名
+        var id=tab.getAttribute("data-target")
+        var div=document.querySelector(id);
+        div.style.left="220px";
+        tab.style.background="rgba(0,0,0,0.6)";
+    }
+    tab.onmouseleave=function(){
+        var tab=this;
+        var id=tab.getAttribute("data-target")
+        var div=document.querySelector(id);
+        div.style.left="-10000px";
+        tab.style.background="none";
+        }
+    }*/
+
+    
+</script>
+<script>
+  /*document.getElementById("tab1")
+.style.display="block";
+    //1. 查找触发事件的元素
+    
+    //查找data-set属性为tab的所有元素
+    var items=document.querySelectorAll(
+     "[data-set=can]");
+    //2. 绑定事件
+    for(var item of items){//遍历每个标签
+      //为当前tab绑定单击事件
+      item.onclick=function(){
+      var item=this;
+      //3. 查找要修改的元素
+      //4. 修改元素
+      //查找id为container下的所有div
+      var divs=document.querySelectorAll("#section_tab>div");
+      for(var div of divs){//遍历每个div
+      //清除当前div的display属性
+      div.style.display="none";
+      }
+    //获得当前tab对应的div的id
+    var id=item.getAttribute("data-target")
+         //tab.dataset.target;
+    //再找到当前tab对应的div
+    var div=document.querySelector(id);
+    div.style.display="block";//设置其display:block
+  }
+}
+$("[data-set=can]").click(function(){
+  $(this).addClass("active1").siblings().removeClass("active1")
+})*/
+</script>
+<script>
+  //details中的页面滚动事件
+  /*var top1=document.getElementById("scrollclick1");
+  var top2=document.getElementById("scrollclick2");
+  window.onscroll=function(){
+  //获得滚动过的距离——网页顶部超出文档显示区顶部的距离
+  var scrollTop=document.body.scrollTop
+    ||document.documentElement.scrollTop;
+    if(scrollTop>=1200){
+      top1.style.display="block";
+      top2.style.display="block";
+    }else{
+      top1.style.display="none";
+      top2.style.display="none";
+    }
+}**/
+</script>
+</html>
