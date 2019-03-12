@@ -4,6 +4,13 @@ import router from './router'
 import store from './store'
 import axios from "axios"
 import $ from 'jquery'
+//7.1:加载第三方模块  qs
+import qs  from "qs";
+//7.2:配置qs模块，qs成功Vue属性
+Vue.prototype.qs = qs;
+//6:配置跨域访问保存session
+axios.defaults.withCredentials=true;
+//7.1:加载第三方模块  qs
 //阻止启动生产消息，关闭生产模式下给出的提示
 Vue.config.productionTip = false
 

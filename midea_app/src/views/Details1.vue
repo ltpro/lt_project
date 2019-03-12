@@ -86,9 +86,9 @@
             <div class="sku_wrap3">
               <h3>数量</h3>
               <div class="num_wrap">
-                <button @click="cart_num(-1)">-</button>
-                <span>{{count}}</span>
-                <button @click="cart_num(+1)">+</button>
+                <button @click="cart_num1()">-</button>
+                <input class="pro_num" value="1" v-model="val"/>
+                <button @click="cart_num2()">+</button>
                 <div>
                   <span>库存</span>
                 </div>
@@ -132,7 +132,7 @@
             </div>
           </div>
           <div class="floor_btn">
-            <a href="#" class="btn1" @click.prevent="cart1()">加入购物车</a>
+            <a href="#" class="btn1" @click.prevent="addcart()">加入购物车</a>
             <a href="#" class="btn2">立即购买</a>
           </div>
           <div class="mod_layer" v-show="isCart">
@@ -142,7 +142,7 @@
             </div>
             <div class="mod_layer_bb">
               <a href="" class="hid" @click.prevent="cart2()">继续购物</a>
-              <a href="" class="hid">去结算</a>
+              <a href="javascript:;" class="hid">去结算</a>
             </div>
           </div>
           <div class="floor_service">
@@ -505,9 +505,9 @@ export default {
         left:0
       },
       bor:{border:"2px solid #f60"},
-      count:1,
       isCart:false, //点击加入购物车的弹框界面
-      back:{opacity:""}
+      lid:this.$route.params.lid,//接受跳转传来的参数
+      val:1//购物车默认数量
     }
   },
   computed:{
@@ -538,24 +538,51 @@ export default {
     change(index){
       this.i=index;
     },
-    cart_num(i){
-      this.count+=i;
-      if(this.count==0){
-        this.count=1
-      }
+    cart_num2(){
+      this.val++;
     },
-    cart1(){
-      this.isCart=true;
-      this.back.opacity="0.6";
+    cart_num1(){
+      if(this.val>1){this.val--;}
+    },
+    addcart(){
+        //脚手架  GoodInfo.vue
+        //console.log(123);
+        //0:为按钮绑定点击事件 
+        //1:获取二个参数 pid price  uid=1
+        var lid = this.lid;
+        var price = this.product[0].price;
+        var title=this.product[0].title;
+        var color=this.product[0].color;
+        var count=this.val;
+        var img=this.pics[0].sm;
+        //console.log(pid+"_"+price+"_"+uid);
+        //2:发送ajax请示
+        var url = "http://localhost:3000/";
+        url+="addcart?lid="+lid;
+        url+="&price="+price;
+        url+="&title="+title;
+        url+="&color="+color;
+        url+="&count="+count;
+        url+="&img="+img
+        this.axios.get(url).then(result=>{
+           if(result.data.code == 1){
+             this.isCart=true;
+           }else{
+             alert("请登录");
+           }
+        })
+
+      
     },
     cart2(){
       this.isCart=false;
     },
+    //异步从服务器获取商品详情信息
     loadDetails(){
       this.axios.get(
         "http://localhost:3000/details1",{
           params:{
-            lid:this.$route.params.lid
+            lid:this.lid
           }
         }
       ).then(res=>{
@@ -1021,7 +1048,7 @@ export default {
   }
   .sku_wrap3 .num_wrap>input{
     float: left;
-    width: 40px;
+    width: 24px;
     height: 24px;
     line-height: 28px;
     text-align:center;

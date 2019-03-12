@@ -1,76 +1,53 @@
 <template>
     <div class="login_page">
         <div class="login_wrap">
-            <a href="" class="bg_img">
+            <a href="javascript:;" class="bg_img">
                 <img src="../../public/img/login/81eecc43e29f.webp" alt="">
             </a>
             <div class="login_inner">
-                <div class="login" v-show="isLogin==false">
+                <div class="login">
                     <div class="login_way">
                         <p>使用合作号登陆</p>
-                        <a href="">
+                        <a href="javascript:;">
                             <i class="icon_qq"></i>
                         </a>
-                        <a href="">
+                        <a href="javascript:;">
                             <i class="icon_wx"></i>
                         </a>
                     </div>
                     <div class="login_type">
                         <div class="login_form">
-                            <form action="">
+                            <form>
                                 <div class="login_form_tit">账号密码登陆</div>
                                 <div class="login_form_row">
-                                    <input type="text" name="uname" placeholder="用户名">
+                                    <input type="text" name="uname" placeholder="用户名" v-model="uname" @blur="username()" minlength="6" maxlength="13">
+                                    <span class="yanzheng">{{yz_uname}}</span>
                                 </div>
                                 <div class="login_form_row">
-                                    <input type="password" placeholder="密码">
+                                    <input type="password" placeholder="密码" v-model="upwd" @blur="password()" @keyup.13="login()">
+                                    <span class="yanzheng">{{yz_upwd}}</span>
                                 </div>
                                 <div class="login_form_row">
-                                    <a href="" class="login_btn">登陆</a>
+                                    <a href="" class="login_btn" @click.prevent="login()" >登陆</a>
                                 </div>
                                 <div class="login_links">
-                                    <a href="" class="a1">短信验证登陆</a>
+                                    <a href="javascript:;" class="a1">短信验证登陆</a>
                                     <i>|</i>
-                                    <a href="" class="a2" @click.prevent=register()>注册</a>
-                                    <a href="" class="a3">找回密码</a>
+                                    <router-link to="/register" class="a2">注册</router-link>
+                                    <a href="javascript:;" class="a3">找回密码</a>
                                 </div>
+                                <div class="mod_layer" v-show="isLogin">
+                                    <div class="mod_layer_aa">
+                                      <i class="login_icon1"></i>
+                                      <p>登陆成功</p>
+                                    </div>
+                                    <div class="mod_layer_bb">
+                                      <router-link to="/" class="hid">去主页</router-link>
+                                      <a href="" class="hid" @click.prevent="register1()">留在本页</a>
+                                    </div>
+                                </div>   
                             </form>
                         </div>
-                    </div>
-                </div>
-                <div class="register" v-show="isLogin==true">
-                    <div>
-                        <form action="">
-                            <div class="login_form_tit">欢迎注册</div>
-                            <div class="login_form_row">
-                                <input type="text" placeholder="用户名为数字或字母长度小于13位" name="uname" v-model="name1" maxlength="13" @blur="myBlur()">
-                                <span>{{text}}</span>
-                            </div>
-                            <div class="login_form_row">
-                                <input type="password" placeholder="密码" name="upwd" @blur="myupwd()">
-                            </div>
-                            <div class="login_form_row">
-                                <input type="password" placeholder="确认密码" name="upwd" @blur="myupwd1()">
-                            </div>
-                            <div class="login_form_row">
-                                <div>
-                                    <span>密码长度必须在8位以上，含大小写字母、数字、符号至少两种</span>
-                                </div>
-                            </div>
-                            <div class="login_form_row">
-                                <div class="select">
-                                    <input type="checkbox" name="register_protocol" id="register_protocol">
-                                    <label for="register_protocol">
-                                        <span>同意
-                                            <a href="">《美的官方商城用户注册协议》</a>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="login_form_row">
-                                <a href="" class="login_btn" @click.prevent=login()>注册</a>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -81,37 +58,52 @@
 export default {
     data:function(){
         return {
-            isLogin:false,
-            text:"",
-            name1:""
+            uname:"",
+            upwd:"",
+            yz_uname:"",
+            yz_upwd:"",
+            isLogin:false
         }
     },
     methods:{
-        register(){
-            this.isLogin=true;
-        },
-        login(){
-            this.isLogin=false;
-        },
-        myBlur(){
-            var a=/^[a-z]+$/;//小写字母组成
-            if (!this.name1) this.text='用户名不能为空';
-            else if(!a.test(this.name1)){
-                            this.text="由小写字母组成"
-            }else{
-                var u=this.name1;
-                var url = "http://localhost:3000/";
-                url+="login?uname="+u;
-                this.axios.get(url).then(result=>{
-          if(result.data.code==1){
-            //发送发送ajax请求获取购物车商品数量
-            //立即更新 updateCount();
-            this.text="用户名已存在"
-          }else{
-            this.text="可以注册"
-          }
-                })
+       username(){
+          if(!this.uname){this.yz_uname="用户名不能为空"}
+          else{this.yz_uname=""}
+       },
+       password(){
+           if(!this.upwd){this.yz_upwd="密码不能为空"}
+           else(this.yz_upwd="")
+       },
+       login(){
+           if(!this.uname){
+               this.yz_uname="用户名不能为空"
+               return;
             }
+            if(!this.upwd){
+                this.yz_upwd="密码不能为空"
+                return;
+            }
+            var postData = this.qs.stringify({
+                    uname:this.uname,
+                    upwd:this.upwd
+            });
+            //3.发送ajax请求
+            var url="http://127.0.0.1:3000/";
+            url+="login";
+            this.axios.post(url,postData).then(result=>{
+                if(result.data.code==1){
+                    //发送ajax请求获取购物车数量
+                    //立即更新 updateCount()
+                    this.isLogin=true
+                }else{
+                    alert(result.data.msg)
+                }
+        })
+       },
+       register1(){
+            this.isLogin=false;
+            this.uname="";
+            this.upwd="";
         }
     }
 }
@@ -256,6 +248,52 @@ export default {
     .select label{
         line-height: 20px;
     }
-    
+    .mod_layer{
+        position: fixed;
+        width:360px;
+        height:200px;
+        top: 50%;
+        left: 50%;
+        z-index:1000;
+        background: #fff;
+        border-radius: 2px;
+        margin-top: -100px;
+        margin-left: -180px;
+  }
+  .mod_layer_aa{
+        padding: 60px 50px;
+        text-align: center;
+        font-size: 14px;
+        position: relative;
+    }
+    .mod_layer_bb{
+      border-top: 1px solid #e6e6e6;
+    }
+    .mod_layer_bb .hid{
+        padding: 17px 0;
+        font-size: 12px;
+        color: #08c;
+        text-align: center;
+        float: left;
+        display: block;
+        width: 50%;
+        min-width: 30%;
+        cursor: pointer;
+    }
+    .mod_layer_aa .login_icon1{
+        position: absolute;
+        display:inline-block;
+        width:48px;
+        height:48px;
+        left: 50px;
+        top: 50%;
+        margin-top: -25px;
+        background:url(../../public/img/xtb/layer_ico.png) no-repeat 0px 0px;
+    }
+    .mod_layer_aa p{
+        padding-left: 70px;
+        text-align: left;
+        font-size:18px;
+    }
 </style>
 

@@ -81,7 +81,7 @@ app.get("/details1",(req,res)=>{
   })
 })
 
-//验证登陆用户名是否存在
+//功能四:验证登陆用户名是否存在
 app.get("/login",(req,res)=>{
   //参数
   var uname = req.query.uname;
@@ -98,3 +98,92 @@ app.get("/login",(req,res)=>{
      }
   });
  })
+
+ //功能五：用户注册
+ app.post('/register',(req,res)=>{
+  var uname=req.body.uname;
+  var upwd=req.body.upwd;
+  if(!uname){
+    res.send({code:401,msg:'请检查用户名和密码，用户名和密码不能为空'});
+	//阻止继续往后执行
+    return;
+  }
+  if(!upwd){
+    res.send({code:402,msg:'请检查用户名和密码，用户名和密码不能为空'});
+	  return;
+  }
+  //执行SQL语句，将注册的数据插入到xz_user数据表中，成功响应 {code:200,msg:'register suc'}
+  pool.query('INSERT INTO midea_user values (null,?,?,null,null,null,null,null)',[uname,upwd],(err,result)=>{
+    if(err) throw err;
+	//是否添加成功
+	if(result.affectedRows>0){
+	  res.send({code:200,msg:'register suc'});
+	}else{
+    res.send({code:-1,msg:"注册失败"});
+  }
+  });
+});
+//功能六：用户登陆
+app.post("/login",(req,res)=>{
+  //参数
+  var uname = req.body.uname;
+  var upwd = req.body.upwd;
+  //sql
+  var  sql = " SELECT uid FROM midea_user";
+       sql+=" WHERE uname = ? AND upwd = ?";
+  pool.query(sql,[uname,upwd],(err,result)=>{
+     if(err)throw err;  
+     if(result.length==0){
+       res.send({code:-1,msg:"用户名或密码有误"});
+     }else{
+       //将用户登录凭证保存在服务器端 session对象中
+       //console.log(result[0].uid)
+       var id = result[0].uid;//获取当前用户id
+       req.session.uid = id; //保存session
+       console.log(id);
+       res.send({code:1,msg:"登录成功"});
+     }
+  });
+ })
+
+ //功能七：将商品添加购物车
+ app.get("/addcart",(req,res)=>{
+  //0:判断用户是否登录
+  if(!req.session.uid){
+    res.send({code:-1,msg:"请登录"});
+    return;
+  }
+
+  //1:参数 pid count uid price
+  var lid = parseInt(req.query.lid);
+  var title=req.query.title;
+  var color=req.query.color;
+  var count=req.query.count;
+  var img=req.query.img;
+  var uid = parseInt(req.session.uid);
+  console.log(uid)
+  var price = parseInt(req.query.price);
+  var sql =" SELECT iid FROM midea_shoppingcart_item";
+      sql+=" WHERE user_id = ? AND product_id = ?";
+  pool.query(sql,[uid,lid],(err,result)=>{
+    if(err)throw err; 
+    if(result.length==0){
+      console.log(1)
+     var sql = ` INSERT INTO midea_shoppingcart_item`;
+     sql+=` VALUES(null,${uid},${lid},${count},${price},${color},${title},${img})`;
+    }else{
+      var sql = ` UPDATE midea_shoppingcart_item`;
+      sql+=` SET count=count+${count} WHERE lid=${lid}`;
+      sql+=` AND uid = ${uid}`;
+    }
+    pool.query(sql,(err,result)=>{
+      if(err)throw err;
+      if(result.affectedRows > 0){
+        res.send({code:1,msg:"添加成功"});
+      }else{
+        res.send({code:-1,msg:"添加失败"});
+      }
+    })
+  })
+  //5:JSON
+});

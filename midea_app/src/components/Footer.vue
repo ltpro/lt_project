@@ -4,29 +4,29 @@
             <div class="inner">
             <ul>
                 <li>                   
-                    <a href=""><h3>商城入驻</h3></a>  
+                    <a href="javascript:;"><h3>商城入驻</h3></a>  
                 </li>
                 <li>
-                    <a href=""><h3>服务条款</h3></a>    
+                    <a href="javascript:;"><h3>服务条款</h3></a>    
                 </li>
                 <li>
-                    <a href=""><h3>隐私政策</h3></a>    
+                    <a href="javascript:;"><h3>隐私政策</h3></a>    
                 </li>
                 <li>
-                    <a href=""><h3>联系我们</h3></a>
+                    <a href="javascript:;"><h3>联系我们</h3></a>
                 </li>
                 <li>
-                    <a href=""><h3>服务中心</h3></a>
+                    <a href="javascript:;"><h3>服务中心</h3></a>
                 </li>
                 <li>
-                    <a href=""><h3>帮助支持</h3></a>  
+                    <a href="javascript:;"><h3>帮助支持</h3></a>  
                 </li>
             </ul>
             </div>
             <div class="midea_copy"> 
                 Copyright © 1968-2019 广东美的网络科技有限公司 <a href="">粤ICP备17058257号</a>
-                <a href=""><img src="../../public/img/footer/gongan.jpg" alt=""></a>
-                <a href="">粤公网安备 44060602000546号</a>
+                <a href="javascript:;"><img src="../../public/img/footer/gongan.jpg" alt=""></a>
+                <a href="javascript:;">粤公网安备 44060602000546号</a>
             </div>
         </div>
     </footer>

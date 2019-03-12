@@ -5,33 +5,33 @@
             <a class="midea_logo" href="//www.midea.cn/?mtag=40005.1.10" title="美的"><img src="../../public/img/header/midea_logo.png" alt=""></a>
             <ul class="nav">
                 <li class="item">
-                    <a href="#">首页</a>
+                    <router-link to="/">首页</router-link>
                 </li>
                 <li class="item">
-                    <a href="#">商家入驻</a>
+                    <a href="javascript:;">商家入驻</a>
                 </li>
                 <li class="item">
-                    <a href="">企业采购</a>
+                    <a href="javascript:;">企业采购</a>
                 </li>
                 <li class="item">
-                    <a href="#">全屋家电套购</a>
+                    <a href="javascript:;">全屋家电套购</a>
                 </li>
                 <li class="item">
-                    <a href="#">会员福利社</a>
+                    <a href="javascript:;">会员福利社</a>
                 </li>
             </ul>
         </div>
         <div class="search_wrap">
             <form action="">
                 <input type="search" name="keyword" placeholder="请搜索商品">
-                <a href="#">
+                <a href="javascript:;">
                     <i class="search_i"></i>
                 </a>
             </form>
         </div>
         <div  class="myphone">
             <div class="login_in" data-head="dropdown">
-                <a href="#" alt="手机扫码登录">
+                <a href="javascript:;" alt="手机扫码登录">
                     <i class="icon_phone"></i>
                 </a>
             </div>
@@ -41,13 +41,13 @@
         </div>
         <div class="mycart"> 
             <div class="login_in" data-head="dropdown">
-                <a href="#" alt="购物车"  target="_blank">
+                <router-link to="/shopcart" alt="购物车"  target="_blank">
                     <i class="icon_cart"></i>
                     <span class="cart_count">1</span>
-                </a>
+                </router-link>
             </div>
              <div class="cart_wrap head_m">
-                <span>立即</span><a href="">登录</a><span>,查看购物车商品</span>
+                <span>立即</span><router-link to="/login">登录</router-link><span>,查看购物车商品</span>
             </div>     
         </div>
         <div  class="login">   
@@ -58,37 +58,37 @@
             </div>
             <div class="login_wra head_m">
                 <div class="row_login">
-                    <a href="" target="blank">
+                    <a href="javascript:;" target="blank">
                         <i class="icon_a"></i>
                         <span>我的订单</span>
                     </a>
                 </div>
                 <div class="row_login">
-                    <a href="" target="blank">
+                    <a href="javascript:;" target="blank">
                         <i class="icon_b"></i>
                         <span>我的优惠券</span>
                     </a>
                 </div>
                 <div class="row_login">
-                    <a href="" target="blank">
+                    <a href="javascript:;" target="blank">
                         <i class="icon_c"></i>
                         <span>会员福利社</span>
                     </a>
                 </div>
                 <div class="row_login">
-                    <a href="" target="blank">
+                    <a href="javascript:;" target="blank">
                         <i class="icon_d"></i>
                         <span>我的权益</span>
                     </a>
                 </div>
                 <div class="row_login">
-                    <a href="" target="blank">
+                    <a href="javascript:;" target="blank">
                         <i class="icon_e"></i>
                         <span>我的美的</span>
                     </a>
                 </div>
                 <div class="row_login">
-                    <a href="" target="blank">
+                    <a href="javascript:;" target="blank">
                     <i class="icon_f"></i>
                         <span>账户设置</span>
                     </a>
@@ -98,12 +98,7 @@
     </div>
     <div class="operation_wrap">
         【通知消息】
-    </div> 
-    <!--头部隐藏元素-->
-    
-    
-    
-    
+    </div>      
 </div>    
 </template>
 

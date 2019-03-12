@@ -10,6 +10,7 @@ import Details5 from './views/Details5'
 import Products from './views/Products'
 import Shopcart from './views/Shopcart'
 import Login from './views/Login'
+import Register from './views/Register'
 import NotFound from './views/NotFound'
 //ES6
 
@@ -36,6 +37,7 @@ export default new Router({
         { path:"details5/:lid",component:Details5},
         { path:"products", component: Products },
         {path:"login",component:Login},
+        {path:"register",component:Register},
         {path:"shopcart",component:Shopcart}
     ]},
     { path: '/*', component:NotFound }
