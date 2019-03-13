@@ -510,6 +510,7 @@ export default {
       val:1//购物车默认数量
     }
   },
+  //计算大图片的背景
   computed:{
     bgPosition(){
       return `-${parseFloat(this.maskStyle.left)*12/5}px -${parseFloat(this.maskStyle.top)*12/5}px`
@@ -522,6 +523,7 @@ export default {
     this.loadDetails();
   },
   methods:{
+    //获取鼠标进入中图片的位置
     dong(e){
       var top=e.offsetY-209/2;
       var left=e.offsetX-209/2;
@@ -544,6 +546,7 @@ export default {
     cart_num1(){
       if(this.val>1){this.val--;}
     },
+    //加入购物车
     addcart(){
         //脚手架  GoodInfo.vue
         //console.log(123);
@@ -563,12 +566,12 @@ export default {
         url+="&title="+title;
         url+="&color="+color;
         url+="&count="+count;
-        url+="&img="+img
+        url+="&img="+img;
         this.axios.get(url).then(result=>{
-           if(result.data.code == 1){
-             this.isCart=true;
+           if(result.data.code == -1){
+              alert("请登录");
            }else{
-             alert("请登录");
+            this.isCart=true;
            }
         })
 

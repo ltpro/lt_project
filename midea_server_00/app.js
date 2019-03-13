@@ -80,8 +80,115 @@ app.get("/details1",(req,res)=>{
     }
   })
 })
-
-//功能四:验证登陆用户名是否存在
+//功能3：商品详情页2
+app.get("/details2",(req,res)=>{
+  var lid=req.query.lid;
+  var progress=0;
+  var obj={
+    pics:[],
+    product:[]
+  }
+  var sql="select * from midea_product_chushiji where lid=?";
+  pool.query(sql,[lid],(err,result)=>{
+    if(err) throw err;
+    progress+=50;
+    obj.product=result;
+    if(progress==100){
+      res.send(obj);
+    }
+  });
+  var sql="select sm,md,lg from midea_product_pic where laptop_id=?"
+  pool.query(sql,[lid],(err,result)=>{
+    if(err) throw err;
+    progress+=50;
+    obj.pics=result;
+    if(progress==100){
+      res.send(obj);
+    }
+  })
+})
+//功能3：商品详情页3
+app.get("/details3",(req,res)=>{
+  var lid=req.query.lid;
+  var progress=0;
+  var obj={
+    pics:[],
+    product:[]
+  }
+  var sql="select * from midea_product_dylg where lid=?";
+  pool.query(sql,[lid],(err,result)=>{
+    if(err) throw err;
+    progress+=50;
+    obj.product=result;
+    if(progress==100){
+      res.send(obj);
+    }
+  });
+  var sql="select sm,md,lg from midea_product_pic where laptop_id=?"
+  pool.query(sql,[lid],(err,result)=>{
+    if(err) throw err;
+    progress+=50;
+    obj.pics=result;
+    if(progress==100){
+      res.send(obj);
+    }
+  })
+})
+//功能3：商品详情页4
+app.get("/details4",(req,res)=>{
+  var lid=req.query.lid;
+  var progress=0;
+  var obj={
+    pics:[],
+    product:[]
+  }
+  var sql="select * from midea_product_cmy where lid=?";
+  pool.query(sql,[lid],(err,result)=>{
+    if(err) throw err;
+    progress+=50;
+    obj.product=result;
+    if(progress==100){
+      res.send(obj);
+    }
+  });
+  var sql="select sm,md,lg from midea_product_pic where laptop_id=?"
+  pool.query(sql,[lid],(err,result)=>{
+    if(err) throw err;
+    progress+=50;
+    obj.pics=result;
+    if(progress==100){
+      res.send(obj);
+    }
+  })
+})
+//功能3：商品详情页5
+app.get("/details5",(req,res)=>{
+  var lid=req.query.lid;
+  var progress=0;
+  var obj={
+    pics:[],
+    product:[]
+  }
+  var sql="select * from midea_product_jsj where lid=?";
+  pool.query(sql,[lid],(err,result)=>{
+    if(err) throw err;
+    progress+=50;
+    obj.product=result;
+    if(progress==100){
+      res.send(obj);
+    }
+  });
+  var sql="select sm,md,lg from midea_product_pic where laptop_id=?"
+  pool.query(sql,[lid],(err,result)=>{
+    if(err) throw err;
+    progress+=50;
+    obj.pics=result;
+    if(progress==100){
+      res.send(obj);
+    }
+  })
+})
+//功能四验证登陆用户名是否存在
 app.get("/login",(req,res)=>{
   //参数
   var uname = req.query.uname;
@@ -93,8 +200,8 @@ app.get("/login",(req,res)=>{
      if(result.length==0){
        res.send({code:-1,msg:"可以注册"});
      }else{
-       //将用户登录凭证保存在服务器端 session对象中
        res.send({code:1,msg:"用户名已存在"});
+
      }
   });
  })
@@ -146,31 +253,38 @@ app.post("/login",(req,res)=>{
   });
  })
 
+ app.get("/add",(req,res)=>{
+  //0:判断用户是否登录
+  if(!req.session.uid){
+    res.send({code:-1,msg:"请登录"})
+    return;
+  }else{
+    res.send("你好")
+  }
+})
  //功能七：将商品添加购物车
  app.get("/addcart",(req,res)=>{
   //0:判断用户是否登录
   if(!req.session.uid){
-    res.send({code:-1,msg:"请登录"});
+    res.send({code:-1,msg:"请登录"})
     return;
   }
-
   //1:参数 pid count uid price
   var lid = parseInt(req.query.lid);
   var title=req.query.title;
   var color=req.query.color;
   var count=req.query.count;
   var img=req.query.img;
-  var uid = parseInt(req.session.uid);
-  console.log(uid)
+  var uid = req.session.uid;
   var price = parseInt(req.query.price);
-  var sql =" SELECT iid FROM midea_shoppingcart_item";
+  var sql =" SELECT id FROM midea_shoppingcart_item";
       sql+=" WHERE user_id = ? AND product_id = ?";
   pool.query(sql,[uid,lid],(err,result)=>{
     if(err)throw err; 
     if(result.length==0){
       console.log(1)
      var sql = ` INSERT INTO midea_shoppingcart_item`;
-     sql+=` VALUES(null,${uid},${lid},${count},${price},${color},${title},${img})`;
+     sql+=` VALUES(null,null,${lid},${count},${price},${color},${title},${img})`;
     }else{
       var sql = ` UPDATE midea_shoppingcart_item`;
       sql+=` SET count=count+${count} WHERE lid=${lid}`;
@@ -185,5 +299,4 @@ app.post("/login",(req,res)=>{
       }
     })
   })
-  //5:JSON
 });

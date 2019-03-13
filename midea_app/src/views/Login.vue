@@ -18,7 +18,7 @@
                     <div class="login_type">
                         <div class="login_form">
                             <form>
-                                <div class="login_form_tit">账号密码登陆</div>
+                                <div class="login_form_tit" @click="app()">账号密码登陆</div>
                                 <div class="login_form_row">
                                     <input type="text" name="uname" placeholder="用户名" v-model="uname" @blur="username()" minlength="6" maxlength="13">
                                     <span class="yanzheng">{{yz_uname}}</span>
@@ -31,7 +31,7 @@
                                     <a href="" class="login_btn" @click.prevent="login()" >登陆</a>
                                 </div>
                                 <div class="login_links">
-                                    <a href="javascript:;" class="a1">短信验证登陆</a>
+                                    <a href="javascript:;" class="a1" @click.prevent="addcart()">短信验证登陆</a>
                                     <i>|</i>
                                     <router-link to="/register" class="a2">注册</router-link>
                                     <a href="javascript:;" class="a3">找回密码</a>
@@ -66,6 +66,24 @@ export default {
         }
     },
     methods:{
+        addcart(){
+    this.axios.get("http://localhost:3000/add").then((result)=>{
+      if(result.data.code==-1){
+        alert("请登录")
+      }else{
+        alert("欢迎光临")
+      }
+    })
+  },
+        app(){
+            this.axios.get("http://localhost:3000/yanzheng").then(result=>{
+                if(result.data.code==-1){
+                    alert("请登录")
+                }else{
+                    alert("欢迎来到本网页")
+                }
+            })
+        },
        username(){
           if(!this.uname){this.yz_uname="用户名不能为空"}
           else{this.yz_uname=""}

@@ -36,11 +36,11 @@
           </div>
         </div>
         <div class="product_right">
-          <h1>空调 变频大1.5匹 一级能效 智能冷暖 KFR-35GW/WXDA1@</h1>
-          <h5><span>急速保价</span>1级能效，美居+京东直连，微信控制（可AIRKISS配网），蓝色时尚装饰块，大导风板，上下左右自动摆风</h5>
+          <h1>{{product[0].title}}</h1>
+          <h5><span>急速保价</span>{{product[0].subtitle}}</h5>
           <div class="floor_price">
             <div class="price_wrap">
-              <p><span>¥</span>3299.00</p>
+              <p><span>¥</span>{{(product[0].price)}}.00</p>
             </div>
           </div>
           <div class="floor_comment">
@@ -69,7 +69,7 @@
           </div>
           <div class="sku">
             <div class="sku_wrap1">
-              <h3>颜色</h3>
+              <h3>{{product[0].color}}</h3>
               <div class="wrap">
                 <span>
                   <img src="../../public/img/xtb/xt_78eeae9d72720a97A25859_120_120.webp" alt="白色">
@@ -78,17 +78,15 @@
               </div>
             </div>
             <div class="sku_wrap2">
-              <h3>规格</h3>
               <div>
-                <span>大1.5匹</span>
               </div>
             </div>
             <div class="sku_wrap3">
               <h3>数量</h3>
               <div class="num_wrap">
-                <button>-</button>
-                <input type="tel" id="num" value="1" pattern="[0-9]">
-                <button>+</button>
+                <button @click="cart_num1()">-</button>
+                <input class="pro_num" value="1" v-model="val"/>
+                <button @click="cart_num2()">+</button>
                 <div>
                   <span>库存</span>
                 </div>
@@ -132,7 +130,7 @@
             </div>
           </div>
           <div class="floor_btn">
-            <a href="#" class="btn1">加入购物车</a>
+            <a href="#" class="btn1" @click.prevent="addcart()">加入购物车</a>
             <a href="#" class="btn2">立即购买</a>
           </div>
           <div class="floor_service">
@@ -259,7 +257,7 @@
                 </tr>
                 <tr>
                   <td>上市日期</td>
-                  <td>2018-06-01</td>
+                  <td>2016-05-01</td>
                 </tr>
                 <tr>
                   <td>产品型号</td>
@@ -281,35 +279,39 @@
               <table class="spec_table">
                 <tbody>
                   <tr>
-                    <td>放置方式</td>
+                    <td>附加功能</td>
                     <td></td>
                   </tr>
                   <tr>
-                    <td>产品类型</td>
+                    <td>水箱容积(L)</td>
                     <td></td>
                   </tr>
                   <tr>
-                    <td>主要过滤原理</td>
+                    <td>适用面积</td>
                     <td></td>
                   </tr>
                   <tr>
-                    <td>滤芯类型</td>
+                    <td>使用环境</td>
                     <td></td>
                   </tr>
                   <tr>
-                    <td>是否直饮</td>
+                    <td>WIFI控制</td>
                     <td></td>
                   </tr>
                   <tr>
-                    <td>是否有电</td>
+                    <td>除湿量</td>
                     <td></td>
                   </tr>
                   <tr>
-                    <td>出水口数量</td>
+                    <td>湿度数值显示</td>
                     <td></td>
                   </tr>
                   <tr>
-                    <td>产品分类</td>
+                    <td>水箱水位显示</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>方向轮</td>
                     <td></td>
                   </tr>
                 </tbody>
@@ -374,22 +376,29 @@ export default {
   data(){
     return {
       pics:[
-        {sm:require("../../public/img/details/1s1_78eeae9d72720a97A25859_120_120.webp"),md:require("../../public/img/details/1m1_78eeae9d72720a97A25859_530_530.webp"),lg:require("../../public/img/details/1l1_78eeae9d72720a97A25859.webp")},
-        {sm:require("../../public/img/details/1s2_2ff9d9fcbff9d4fcA8430_120_120.webp"),md:require("../../public/img/details/1m2_2ff9d9fcbff9d4fcA8430_530_530.webp"),lg:require("../../public/img/details/1l2_2ff9d9fcbff9d4fcA8430.webp")},
-        {sm:require("../../public/img/details/1s3_613deda569af56b8A25623_120_120.webp"),md:require("../../public/img/details/1m3_613deda569af56b8A25623_530_530.webp"),lg:require("../../public/img/details/1l3_613deda569af56b8A25623.webp")},
-        {sm:require("../../public/img/details/1s4_e666eec19098dfdeA29769_120_120.webp"),md:require("../../public/img/details/1m4_e666eec19098dfdeA29769_530_530.webp"),lg:require("../../public/img/details/1l4_e666eec19098dfdeA29769.webp")},
-        {sm:require("../../public/img/details/1s5_b6c97fb764c02f2aA25956_120_120.webp"),md:require("../../public/img/details/1m5_b6c97fb764c02f2aA25956_530_530.webp"),lg:require("../../public/img/details/1l5_b6c97fb764c02f2aA25956.webp")}
+        {md:"",lg:""},
+        {md:"",lg:""},
+        {md:"",lg:""},
+        {md:"",lg:""},
+        {md:"",lg:""}
       ],
-      specs:[],
-      ulWidth:0,//小图片列表的宽
-      moved:0,//已经左移的li的个数
+      product:[
+        {
+          title:"",
+          subtitle:"",
+          price:"",
+          brand:"",
+          color:""
+          }
+      ],
       i:0,//默认显示第几张图片
       show:false,//控制mask和lgDiv的显示和隐藏
       maskStyle:{
         top:0,
         left:0
       },
-      bor:{border:"2px solid #f60"}
+      bor:{border:"2px solid #f60"},
+      val:1//购物车默认数量
     }
   },
   computed:{
@@ -401,7 +410,7 @@ export default {
     }
   },
   created(){
-    //this.loadDetails();
+    this.loadDetails();
   },
   methods:{
     dong(e){
@@ -420,25 +429,30 @@ export default {
     change(index){
       this.i=index;
     },
+    cart_num2(){
+      this.val++;
+    },
+    cart_num1(){
+      if(this.val>1){this.val--;}
+    },
     loadDetails(){
       this.axios.get(
-        "http://localhost:3000/details",{
+        "http://localhost:3000/details5",{
           params:{
             lid:this.$route.params.lid
           }
         }
       ).then(res=>{
-        console.log(res.data);
+        console.log(res.data.pics);
         this.product=res.data.product;
         this.pics=res.data.pics;
-        this.ulWidth=this.pics.length*62+"px";
-        this.moved=0;
         this.i=0;
         this.show=false;
         this.specs=res.data.specs;
       })
     }
   },
+  
   watch:{
     /*"$route":function(){
       this.loadDetails();
@@ -879,9 +893,17 @@ export default {
     height:28px;
     line-height:28px;
   }
+  .sku_wrap3 .num_wrap span{
+    display:block;
+    float:left;
+    width:26px;
+    height:26px;
+    border:1px solid #999;
+    line-height:28px;
+  }
   .sku_wrap3 .num_wrap>input{
     float: left;
-    width: 40px;
+    width: 24px;
     height: 24px;
     line-height: 28px;
     text-align:center;

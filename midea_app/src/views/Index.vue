@@ -873,7 +873,7 @@
                 </div>    
             </div>
             <div class="product3">
-                <router-link :to="`/details3/${products[0].href.split('=')[1]}`">
+                <router-link :to="`/details3/${products[2].href.split('=')[1]}`">
                     <img :src="products[2].pic" alt="">                   
                 </router-link>
                 <div>
@@ -1067,7 +1067,7 @@ export default {
             }
         }
     },
-    methods:{
+    methods:{      
       loadIndex(){
         this.axios.get(
             "http://localhost:3000/index"

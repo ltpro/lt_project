@@ -3,7 +3,6 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from "axios"
-import $ from 'jquery'
 //7.1:加载第三方模块  qs
 import qs  from "qs";
 //7.2:配置qs模块，qs成功Vue属性
